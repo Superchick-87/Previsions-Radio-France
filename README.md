@@ -22,7 +22,7 @@ Une inclusion est faite via cette url de parseAndSave.php qui fait une sauvegard
 </br>
 <strong>*** Front ***</strong></br>
 L'url index.html est reload :
-- 9h22 | 13h22 | 18h22
+9h22 | 13h22 | 18h22
 "index.html" est traité en vuejs, tris contextuels et restrictifs
 Les sources graphiques sont accessibles ici :
  ./sources/interface.ai
