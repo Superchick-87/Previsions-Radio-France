@@ -16,13 +16,12 @@ https://nom-de-dommaine/Previsions-Radio-France/id-server.php</br>
 <strong>Back</strong></br>
 Le Récurrence des majs (Radio France) :</br>
 9h15 | 13h15 | 18h15</br>
-Le Récurrence des uploads (tâche CRON - DSI SO -> M. Bardy) :</br>
+Le Récurrence appels pour extraire le .xml (tâche CRON - DSI SO -> M. Bardy) :</br>
 9h20 | 13h20 | 18h20</br>
-La tâche appelle cette url qui extrait un fichier xml et le place dans ./datas/</br>
+La tâche appelle cette url qui extrait un fichier .xml et le place dans ./datas/</br>
 url : https://infographie.sudouest.fr/Previsions-Radio-France/getDatas.php</br>
-Une inclusion est faite via cette url de parseAndSave.php qui fait une sauvegarde en base (table : "news") afin de stocker les données et de les agréger.</br>
+Une inclusion est faite via cette url de "parseAndSave.php" qui fait une sauvegarde en base (table : "news") afin de stocker les données et de les agréger.</br>
 "accesserver.php" à renseigner</br>
-</br>
 <strong>Front</strong></br>
 L'url index.html est reload :</br>
 9h22 | 13h22 | 18h22</br>
