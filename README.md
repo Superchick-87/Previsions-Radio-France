@@ -10,8 +10,8 @@ Ip du server à fournir à Camille Bani (Chef de Projet) :</br>
 +33 6 13 13 06 70</br>
 camille.bani@radiofrance.com </br>
 
-En cas de changement, pour récupérer l'Ip : </br>
-https://nom-de-dommaine/Previsions-Radio-France/id-server.php
+En cas de changement, pour connaitre l'Ip : </br>
+https://nom-de-dommaine/Previsions-Radio-France/id-server.php</br>
 
 <strong>*** Back ***</strong></br>
 Le Récurrence des majs (Radio France) :</br>
