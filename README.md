@@ -1,5 +1,5 @@
 # Previsions-Radio-France
-Affiche les prévisions d'actualité Radio France
+<strong>Affiche les prévisions d'actualité Radio France</strong>
 
 Récupération trois par jour du flux (xml) mis à jour de Radio France et sauvagarde dans une base de donnée
 
@@ -7,7 +7,7 @@ Fichier distant = "http://sophia.radiofrance.com/prevactu/partner/prev_xml_partn
 Ip du server à fournir à Mme xxx en cas de changement
 Récupération de l'Ip : https://nom-de-dommaine/Previsions-Radio-France/id-server.php
 
-*** Back ***
+*** Back ***</br>
 Le Récurrence des majs (Radio France) :
 - 9h15
 - 13h15
@@ -22,7 +22,7 @@ https://infographie.sudouest.fr/Previsions-Radio-France/getDatas.php
 Une inclusion est faite via cette url de parseAndSave.php qui fait une sauvegarde en base (table : "news") afin de stocker toutes les infos et de les agréger.
 "accesserver.php" à renseigner
 
-*** Front ***
+*** Front ***</br>
 L'url index.html est reload :
 - 9h20
 - 13h20
