@@ -13,7 +13,7 @@ camille.bani@radiofrance.com </br>
 En cas de changement, pour connaitre l'Ip : </br>
 https://nom-de-dommaine/Previsions-Radio-France/id-server.php</br>
 
-<strong>*** Back ***</strong></br>
+<strong>Back</strong></br>
 Le Récurrence des majs (Radio France) :</br>
 9h15 | 13h15 | 18h15</br>
 Le Récurrence des uploads (tâche CRON - DSI SO -> M. Bardy) :</br>
