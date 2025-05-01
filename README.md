@@ -4,11 +4,11 @@
 Récupération trois par jour du flux (xml) mis à jour de Radio France et sauvagarde dans une base de donnée
 
 Fichier distant contenant le flux : </br>
-http://sophia.radiofrance.com/prevactu/partner/prev_xml_partner.php
-Ip du server à fournir à Camille Bani (Chef de Projet) :
-+33 1 56 40 40 70
-+33 6 13 13 06 70
-camille.bani@radiofrance.com 
+http://sophia.radiofrance.com/prevactu/partner/prev_xml_partner.php </br>
+Ip du server à fournir à Camille Bani (Chef de Projet) :</br>
++33 1 56 40 40 70</br>
++33 6 13 13 06 70</br>
+camille.bani@radiofrance.com </br>
 
 En cas de changement, pour récupérer l'Ip : 
 https://nom-de-dommaine/Previsions-Radio-France/id-server.php
