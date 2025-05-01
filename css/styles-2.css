@@ -1,0 +1,201 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,200,300,400,500,600,700,800');
+@import url('https://fonts.googleapis.com/css?family=Bebas+Neue&display=swap');
+/* ============ RESET DE BASE ============ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    font-family: 'Roboto', sans-serif;
+    padding: 1em;
+    /* background-color: #e5e5e5; */
+  }
+  .fond {
+    background-image: url('../images/fond.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 40vw; /* taille en proportion de l'écran */
+    height: 100vh;
+    position: fixed; /* colle au coin bas-droit de l’écran */
+    bottom: 0;
+    right: 0;
+    /* permet au h1 de se positionner relativement à ce bloc */
+    position: fixed;
+  }
+  
+  .titre-type {
+    position: absolute;
+  bottom: 20%; /* position relative à la hauteur du .fond */
+  right: 10%;  /* position relative à la largeur du .fond */
+  transform: rotate(48deg);
+  background-color: rgb(158, 1, 89);
+  color: aliceblue;
+  font-size: 4vw; /* responsive avec l'écran */
+  letter-spacing: -0.3rem;
+  }
+  
+  .result{
+    /* margin-top: 160px; */
+    /* border: 2px solid red; */
+  }
+  .menus{
+    position: fixed;
+    background-color: #c30d00;
+    top: 0px;
+    left: 0px;
+    width: 60%;
+    margin: 0px auto;
+    text-align: left;
+    padding: 20px;
+    /* border: 2px dashed blue; */
+  }
+select {
+    background-color: #c1121f;
+    color: white;
+    padding: 8px;
+    width: 300px;
+    border: none;
+    font-size: 17px;
+    box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.3);
+    -webkit-appearance: button;
+    appearance: button;
+    outline: none;
+    margin: 10px;
+    /* border: 1px solid; */
+    /* border-radius: 15px; */
+    background-color: black;
+}
+.titre{
+  font-size: 1.2rem;
+    margin: 4px 0px 7px 0px;
+    line-height: 1.3rem;
+    font-weight: 500;
+}
+mark{
+    padding: 5px;
+    line-height: 2rem;
+    padding: 5px;
+}
+
+.domaine{
+   font-size: 1.1rem;
+}
+.event-detail{
+  margin-left: 10px;
+  /* padding-left: 5px; */
+  border-left: 1px solid #000000;
+  font-weight: 300;
+  column-count: 3;
+  column-gap: 20px;
+  /* border-right: 1px solid #000000; */
+  padding: 5px;
+  background-color: aliceblue;
+}
+.ss-domaine-p{
+    color: #000000;
+    background-color: #dfdfdf;
+    margin: 5px 0px 2px;
+    font-weight: 500;
+    width: max-content;
+}
+.ss-in-event{
+    color:rgb(0, 0, 0);
+}
+.ss-in-event-p{
+  color:rgb(0, 0, 0);
+}
+.in-event{
+    color:rgb(54, 53, 53);
+}
+.date-event{
+  /* background-color: #000000; */
+  color: #000000;
+  font-size: 0.9rem;
+  width: max-content;
+  padding: 2px 5px 2px 3px;
+  font-weight: 700;
+  /* border-left: 1px solod; */
+  /* border-left: 3px solid #000000; */
+}
+
+.information-generale{
+    background-color: #6f1d1b;
+    color: rgb(255, 255, 255);
+}
+.culture{
+    background-color: #9e0059;
+    color: rgb(255, 255, 255);
+}
+.sport{
+    background-color: #40643e;
+    color: rgb(255, 255, 255);
+}
+.etranger{
+    background-color: #283618;
+    color: rgb(255, 255, 255);
+}
+.union-europeenne{
+  background-color: #003049;
+  color: white;
+}
+.media---multimedia{
+  background-color: #e36414;
+  color: white;
+}
+.economie{
+  background-color: #9a031e;
+  color: white;
+}
+.diplomatie---questions-intern{
+  background-color: #0f4c5c;
+  color: white;
+}
+.securite{
+  background-color: #414833;
+  color: white;
+}
+.politique{
+  background-color: #8d775f;
+  color: white;
+}
+.justice{
+  background-color: #4a4e69;
+  color: white;
+}
+.social{
+  background-color: #40798c;
+  color: white;
+}
+
+.news-item {
+   padding: 1em;
+    border-bottom: 1px solid #ccc;
+    width: 60%;
+    /* margin: 0px auto; */
+  }
+
+  
+  @media screen and (max-width: 400px) {
+      /* Styles spécifiques aux petits écrans */
+      .news-item {
+        width: 100%;
+        padding: 0.5em;
+       }
+       .event-detail{
+        margin-left: 0px;
+       column-count: 1;
+       column-gap: 20px;
+       /* border-right: 1px solid #000000; */
+       padding: 5px;
+       background-color: aliceblue;
+     }
+     .fond {
+     display: none;
+    }
+    .menus {
+      width: 100%;
+   }
+    /* Autres ajustements selon ton layout */
+  }
+  

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Sud Ouest - Prévisions d'actualités</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+  <!-- * Sert à faire apparaître au défilement * -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+</head>
+
+<body>
+  <div id="app">
+    <div class="fond"></div>
+    <div id="menus" class="menus">
+      <p class="copy-right"> © {{ copyrightDone}}</p>
+      <h2 id="publication">Date de publication</h2>
+
+      <h2 id="publication-M">Publication</h2>
+      <mark class="publication">{{ formatPublicationDate(publicationDate) }} à {{ formatPublicationTime(publicationDate)
+        }}</mark>
+      <h3 class="search">Recherche</h3>
+      <div>
+        <select v-model="selectedStart">
+          <option value="">-- Date --</option>
+          <option v-for="date in filteredStartOptions" :key="date" :value="date">
+            {{ formatDate(date) }}
+          </option>
+        </select>
+
+        <select v-model="selectedType">
+          <option value="">-- Domaine --</option>
+          <option v-for="type in filteredTypeOptions" :key="type" :value="type">{{ type }}</option>
+        </select>
+
+        <select v-model="selectedSubtype">
+          <option value="">-- Sous domaine --</option>
+          <option v-for="subtype in filteredSubtypeOptions" :key="subtype" :value="subtype">{{ subtype }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div :style="{ marginTop: dynamicMarginTop + 'px' }" id="results">
+      <div v-for="(group, type) in groupedAndSortedItems" :key="type" class="type-group">
+        <p v-if="selectedStart" class="date group-date">
+          {{ formatDate(group[0].start) }}
+        </p>
+
+        <h2 class="group-title">
+          <mark :class="bdc(type)" class="big-domaine">{{ type }}</mark>
+        </h2>
+
+        <div v-for="(item, index) in group" :key="index" class="news-item">
+          <p v-if="!selectedStart" class="date date-event">
+            {{ formatDate(item.start) }}
+          </p>
+
+          <mark :class="bdc(item.type)">
+            <span id="subtype" class="ss-domaine">{{ item.subtype }}</span>
+          </mark>
+          <div v-if="item.title.includes('****')" class="bloc-warning">
+            <div class="pict-warning"></div>
+            <h3 class="titre-warning">{{ item.title }}</h3>
+          </div>
+          <h3 v-else class="titre">{{ item.title }}</h3>
+          <div v-if="item.content.trim()" id="event-detail" v-html="formatString(item.content)" class="event-detail">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+          dynamicMarginTop: 0,
+          items: [],
+          selectedStart: '',
+          selectedType: '',
+          selectedSubtype: '',
+          publicationDate: '',
+          copyrightDone: '',
+          hasMounted: false,
+          isFirstLoad: true
+        };
+      },
+      computed: {
+        filteredItems() {
+          return this.items.filter(item => {
+            return (!this.selectedStart || item.start.startsWith(this.selectedStart)) &&
+              (!this.selectedType || item.type === this.selectedType) &&
+              (!this.selectedSubtype || item.subtype === this.selectedSubtype);
+          });
+        },
+        filteredStartOptions() {
+          let filtered = this.items;
+
+          if (this.selectedType && this.selectedSubtype) {
+            filtered = filtered.filter(i => i.type === this.selectedType && i.subtype === this.selectedSubtype);
+          } else if (this.selectedType) {
+            filtered = filtered.filter(i => i.type === this.selectedType);
+          } else if (this.selectedSubtype) {
+            filtered = filtered.filter(i => i.subtype === this.selectedSubtype);
+          }
+
+          return [...new Set(filtered.map(i => i.start))].sort();
+        }
+        ,
+
+        filteredTypeOptions() {
+          let filtered = this.selectedStart
+            ? this.items.filter(i => i.start.startsWith(this.selectedStart))
+            : this.items;
+          return [...new Set(filtered.map(i => i.type))].sort((a, b) => a.localeCompare(b));
+        },
+        filteredSubtypeOptions() {
+          let filtered = this.items;
+
+          if (this.selectedStart) {
+            filtered = filtered.filter(i => i.start.startsWith(this.selectedStart));
+          }
+
+          if (this.selectedType) {
+            filtered = filtered.filter(i => i.type === this.selectedType);
+          }
+
+          return [...new Set(filtered.map(i => i.subtype))].sort((a, b) => a.localeCompare(b));
+        },
+        groupedAndSortedItems() {
+          const grouped = {};
+          this.filteredItems.forEach(item => {
+            if (!grouped[item.type]) grouped[item.type] = [];
+            grouped[item.type].push(item);
+          });
+
+          Object.keys(grouped).forEach(type => {
+            grouped[type].sort((a, b) => new Date(a.start) - new Date(b.start));
+          });
+
+          return Object.fromEntries(
+            Object.entries(grouped).sort(([a], [b]) => a.localeCompare(b))
+          );
+        }
+      },
+      methods: {
+        formatString(texte) {
+          return texte
+            .replace(/\. - ([^\n]+)/g, (_, contenu) => {
+              const propre = contenu.trim().replace(/[-\.]\s*$/, '');
+              return `.<p class="in-event">${propre}</p>`;
+            })
+            .replace(/(?:^|\n)- ([^\n]+)/g, (_, contenu) => {
+              const propre = contenu.trim().replace(/[-\.]\s*$/, '');
+              return `\n<p class="in-event">${propre}</p>`;
+            })
+            .replace(/(?:^|\n)\* ([^\n]+)/g, (_, contenu) => {
+              const propre = contenu.trim();
+              return `\n<p class="ss-in-event-p">${propre}</p>`;
+            });
+        },
+        formatDate(isoDateStr) {
+          const date = new Date(isoDateStr);
+          const jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+          const mois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+          return `${jours[date.getDay()]} ${date.getDate()} ${mois[date.getMonth()]}`;
+        },
+        formatPublicationDate(isoDateStr) {
+          const date = new Date(isoDateStr);
+          return date.toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' });
+        },
+        formatPublicationTime(isoDateStr) {
+          const date = new Date(isoDateStr);
+          date.setHours(date.getHours() - 1);
+          return date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+        },
+        bdc(type) {
+          return type
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/\s+/g, '-')
+            .replace(/[^a-z0-9\-]/g, '');
+        },
+        setDynamicMarginTop() {
+          const menu = document.getElementById('menus');
+          if (menu) {
+            const height = menu.offsetHeight;
+            this.dynamicMarginTop = height + 20;
+          }
+        },
+        scrollToResult() {
+          if (this.isFirstLoad) return;
+
+          this.$nextTick(() => {
+            const results = document.getElementById('results');
+            const menu = document.getElementById('menus');
+
+            if (results && menu) {
+              const rect = results.getBoundingClientRect();
+              const absoluteTop = window.pageYOffset + rect.top;
+              const offset = absoluteTop - menu.offsetHeight - 10;
+
+              window.scrollTo({
+                top: offset,
+                behavior: 'smooth'
+              });
+            }
+          });
+        }
+      },
+      mounted() {
+        this.setDynamicMarginTop();
+        window.addEventListener('resize', this.setDynamicMarginTop);
+
+        this.isFirstLoad = true;
+        this.$nextTick(() => {
+          this.isFirstLoad = false;
+        });
+
+        fetch('datas/latest.xml')
+          .then(response => {
+            if (!response.ok) throw new Error("Erreur lors du chargement de latest.xml");
+            return response.json();
+          })
+          .then(latestData => {
+            const xmlFilePath = latestData.latest;
+            if (!xmlFilePath) throw new Error("Chemin du fichier XML non trouvé");
+
+            fetch(xmlFilePath)
+              .then(response => response.text())
+              .then(xmlStr => {
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(xmlStr, "application/xml");
+                const publication = xmlDoc.getElementsByTagName("PUBLICATION")[0]?.textContent;
+                const copyright = xmlDoc.getElementsByTagName("COPYRIGHT")[0]?.textContent;
+                this.publicationDate = publication;
+                this.copyrightDone = copyright;
+
+                const itemNodes = xmlDoc.getElementsByTagName("ITEM");
+                const parsedItems = [];
+
+                for (let i = 0; i < itemNodes.length; i++) {
+                  const item = itemNodes[i];
+                  let content = item.getElementsByTagName("CONTENT")[0]?.textContent || '';
+                  content = content.replace(/<br>/g, "\n").replace(/<li>/g, "- ").replace(/<\/li>/g, "");
+
+                  parsedItems.push({
+                    uid: item.getElementsByTagName("UID")[0]?.textContent,
+                    update: item.getElementsByTagName("UPDATE")[0]?.textContent,
+                    start: item.getElementsByTagName("START")[0]?.textContent?.substring(0, 10),
+                    end: item.getElementsByTagName("END")[0]?.textContent,
+                    title: item.getElementsByTagName("TITLE")[0]?.textContent,
+                    content: content,
+                    type: item.getElementsByTagName("TYPE")[0]?.textContent,
+                    subtype: item.getElementsByTagName("SUBTYPE")[0]?.textContent,
+                    level: item.getElementsByTagName("LEVEL")[0]?.textContent,
+                    link: item.getElementsByTagName("LINK")[0]?.textContent,
+                    source: item.getElementsByTagName("SOURCE")[0]?.textContent,
+                    publication: publication
+                  });
+                }
+
+                this.items = parsedItems;
+
+                const today = new Date().toISOString().split('T')[0];
+                const hasToday = parsedItems.some(item => item.start.startsWith(today));
+                if (hasToday) {
+                  this.selectedStart = today;
+                }
+
+                this.hasMounted = true;
+              })
+              .catch(err => console.error("Erreur de chargement du fichier XML :", err));
+          })
+          .catch(error => console.error("Erreur de chargement du fichier latest.xml :", error));
+      },
+      watch: {
+        selectedStart() {
+          const validTypes = [...new Set(
+            this.items
+              .filter(i => i.start.startsWith(this.selectedStart))
+              .map(i => i.type)
+          )];
+
+          if (!validTypes.includes(this.selectedType)) {
+            this.selectedType = '';
+          }
+
+          const validSubtypes = [...new Set(
+            this.items
+              .filter(i => i.start.startsWith(this.selectedStart) && (!this.selectedType || i.type === this.selectedType))
+              .map(i => i.subtype)
+          )];
+
+          if (!validSubtypes.includes(this.selectedSubtype)) {
+            this.selectedSubtype = '';
+          }
+
+          this.scrollToResult();
+        },
+        selectedType() {
+          const validSubtypes = [...new Set(
+            this.items
+              .filter(i => (!this.selectedStart || i.start.startsWith(this.selectedStart)) && i.type === this.selectedType)
+              .map(i => i.subtype)
+          )];
+
+          if (!validSubtypes.includes(this.selectedSubtype)) {
+            this.selectedSubtype = '';
+          }
+
+          this.scrollToResult();
+        },
+        selectedSubtype() {
+          // Trouver le type correspondant si pas encore sélectionné
+          if (!this.selectedType) {
+            const correspondant = this.items.find(i => i.subtype === this.selectedSubtype);
+            if (correspondant) {
+              this.selectedType = correspondant.type;
+            }
+          }
+          this.scrollToResult();
+        }
+      }
+    }).mount('#app');
+
+    function reloadAt(time) {
+      const currentTime = new Date();
+      const reloadTime = new Date(currentTime.toDateString() + ' ' + time);
+      if (reloadTime > currentTime) {
+        setTimeout(() => {
+          location.reload();
+        }, reloadTime - currentTime);
+      }
+    }
+
+    reloadAt("09:22");
+    reloadAt("13:22");
+    reloadAt("18:22");
+  </script>
+  <script>
+    /**
+     * Sert à faire apparaître la flêche au défilement
+    */
+
+    jQuery(document).ready(function () {
+      var duration = 500;
+      jQuery(window).scroll(function () {
+        if (jQuery(this).scrollTop() > 100) {
+          // Si un défillement de 100 pixels ou plus.
+          // Ajoute le bouton
+          jQuery('.cRetour').fadeIn(duration);
+        } else {
+          // Sinon enlève le bouton
+          jQuery('.cRetour').fadeOut(duration);
+        }
+      });
+
+      jQuery('.cRetour').click(function (event) {
+        // Un clic provoque le retour en haut animé.
+        event.preventDefault();
+        jQuery('html, body').animate({
+          scrollTop: 0
+        }, duration);
+        return false;
+      })
+    });
+  </script>
+  <div class="cRetour"></div>
+</body>
+
+</html>

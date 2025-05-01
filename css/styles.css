@@ -1,0 +1,379 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,200,300,400,500,600,700,800');
+@import url('https://fonts.googleapis.com/css?family=Bebas+Neue&display=swap');
+
+/* ============ RESET DE BASE ============ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  padding: 1em;
+  /* background-color: #e5e5e5; */
+}
+
+h2 {
+  color: white;
+}
+
+.search {
+  width: max-content;
+  margin: 10px 0px 5px 10px;
+  font-weight: 200;
+  color: white;
+}
+
+.fond {
+  background-image: url('../images/fond.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 40vw;
+  /* taille en proportion de l'écran */
+  height: 100vh;
+  position: fixed;
+  /* colle au coin bas-droit de l’écran */
+  bottom: 0;
+  right: 0;
+  /* permet au h1 de se positionner relativement à ce bloc */
+  position: fixed;
+}
+
+.pict-warning {
+  background-image: url(../images/warning.gif);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 35px;
+  height: 30px;
+  /* margin-right: 10px; */
+}
+
+.bloc-warning {
+  display: flex;
+  /* border: 1px solid; */
+  border-radius: 5px;
+  padding: 0px 3px;
+  align-items: center;
+  background-color: #f3e3cb;
+}
+
+.titre-warning {
+  font-size: 1.2rem;
+  margin: 7px 0px 5px 0px;
+  line-height: 1.3rem;
+  font-weight: 500;
+}
+
+.publication {
+  background-color: #ffffff;
+  font-size: 1rem;
+  /* width: max-content; */
+  font-size: 0.8rem;
+  margin-bottom: 10px;
+}
+
+.titre-type {
+  position: absolute;
+  bottom: 20%;
+  /* position relative à la hauteur du .fond */
+  right: 10%;
+  /* position relative à la largeur du .fond */
+  transform: rotate(48deg);
+  background-color: rgb(158, 1, 89);
+  color: aliceblue;
+  font-size: 4vw;
+  /* responsive avec l'écran */
+  letter-spacing: -0.3rem;
+}
+
+.result {
+  width: 100%;
+  max-width: 100%;
+}
+
+#app {
+  width: 100%;
+  max-width: 100%;
+}
+
+.menus {
+  position: fixed;
+  background-color: #c30d00;
+  top: 0px;
+  left: 0px;
+  width: 60%;
+  margin: 0px auto;
+  text-align: left;
+  padding: 10px 20px 10px 20px
+    /* border: 2px dashed blue; */
+}
+
+.copy-right {
+  color: white;
+}
+
+/* select {
+    background-color: #c1121f;
+    color: white;
+    padding: 8px;
+    width: 300px;
+    border: none;
+    font-size: 17px;
+    box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.3);
+    -webkit-appearance: button;
+    appearance: button;
+    outline: none;
+    margin: 0px 10px 20px 10px;
+    background-color: black;
+} */
+select {
+  background-color: black;
+  color: white;
+  padding: 8px;
+  width: 100%;
+  /* responsive */
+  max-width: 300px;
+  /* limite à 300px */
+  border: none;
+  font-size: 17px;
+  box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.3);
+  margin: 0px 10px 10px 10px;
+
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  border-radius: 0;
+  /* <<< RECTANGULAIRE */
+  outline: none;
+  box-sizing: border-box;
+
+  background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px;
+  padding-right: 40px;
+  /* espace pour la flèche */
+}
+
+.titre {
+  font-size: 1.2rem;
+  margin: 4px 0px 7px 0px;
+  line-height: 1.3rem;
+  font-weight: 500;
+}
+
+mark {
+  padding: 5px;
+  line-height: 2rem;
+  padding: 5px;
+}
+
+.domaine {
+  font-size: 1.1rem;
+}
+
+.domaine {
+  font-size: 2.1rem;
+}
+
+.event-detail {
+  margin-left: 10px;
+  /* padding-left: 5px; */
+  border-left: 1px solid #000000;
+  font-weight: 300;
+  column-count: 3;
+  column-gap: 20px;
+  /* border-right: 1px solid #000000; */
+  padding: 5px;
+  background-color: aliceblue;
+}
+
+.ss-domaine-p {
+  color: #000000;
+  background-color: #dfdfdf;
+  margin: 5px 0px 2px;
+  font-weight: 500;
+  width: max-content;
+}
+
+.ss-in-event {
+  color: rgb(0, 0, 0);
+}
+
+.ss-in-event-p {
+  color: rgb(0, 0, 0);
+}
+
+.in-event {
+  color: rgb(54, 53, 53);
+}
+
+/* DATES */
+.date {
+  font-size: 1.1rem;
+  background-color: black;
+  color: white;
+  width: max-content;
+  font-weight: 200;
+  padding: 1px 5px;
+}
+
+.date-event {
+  margin-bottom: 2px;
+}
+
+.group-date {
+  margin-bottom: 6px;
+}
+
+/* TYPES */
+.information-generale {
+  background-color: #6f1d1b;
+  color: rgb(255, 255, 255);
+}
+
+.culture {
+  background-color: #9e0059;
+  color: rgb(255, 255, 255);
+}
+
+.sport {
+  background-color: #40643e;
+  color: rgb(255, 255, 255);
+}
+
+.etranger {
+  background-color: #283618;
+  color: rgb(255, 255, 255);
+}
+
+.union-europeenne {
+  background-color: #003049;
+  color: white;
+}
+
+.media---multimedia {
+  background-color: #e36414;
+  color: white;
+}
+
+.economie {
+  background-color: #9a031e;
+  color: white;
+}
+
+.diplomatie---questions-intern {
+  background-color: #0f4c5c;
+  color: white;
+}
+
+.securite {
+  background-color: #414833;
+  color: white;
+}
+
+.politique {
+  background-color: #8d775f;
+  color: white;
+}
+
+.justice {
+  background-color: #4a4e69;
+  color: white;
+}
+
+.social {
+  background-color: #40798c;
+  color: white;
+}
+
+.news-item {
+  padding: 1em;
+  border-bottom: 1px solid #ccc;
+  width: 60%;
+  /* margin: 0px auto; */
+}
+
+#publication {
+  display: block;
+}
+
+#publication-M {
+  display: none;
+}
+
+.cRetour {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  /* padding: 10px; */
+  line-height: 44px;
+  font-size: 33px;
+  text-align: center;
+  color: #ffffffd5;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid black;
+  z-index: 99999;
+  transition: all ease-in 0.2s;
+  position: fixed;
+  cursor: pointer;
+  bottom: 1em;
+  right: 35%;
+  display: none;
+}
+
+.cRetour:before {
+  content: "\25b2";
+}
+
+.cRetour:hover {
+  background: rgba(0, 0, 0, 1);
+  transition: all ease-in 0.2s;
+}
+
+@media screen and (max-width: 480px) {
+
+  /* Styles spécifiques aux petits écrans */
+  #publication {
+    display: none;
+  }
+
+  #publication-M {
+    display: block;
+  }
+
+  .news-item {
+    width: 100%;
+    padding: 0.5em;
+  }
+
+  .event-detail {
+    margin-left: 0px;
+    column-count: 1;
+    column-gap: 20px;
+    /* border-right: 1px solid #000000; */
+    padding: 5px;
+    background-color: aliceblue;
+  }
+
+  .fond {
+    display: none;
+  }
+
+  .menus {
+    width: 100%;
+    background-image: url('../images/fond-M.svg');
+    background-size: 115%;
+    background-position: -66% 20%;
+    background-repeat: no-repeat;
+  }
+
+  .cRetour {
+    right: 20px;
+  }
+
+  /* Autres ajustements selon ton layout */
+}
