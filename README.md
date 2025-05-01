@@ -24,7 +24,7 @@ url : https://infographie.sudouest.fr/Previsions-Radio-France/getDatas.php</br>
 Une inclusion est faite via cette url de parseAndSave.php qui fait une sauvegarde en base (table : "news") afin de stocker les données et de les agréger.</br>
 "accesserver.php" à renseigner</br>
 </br>
-<strong>*** Front ***</strong></br>
+<strong>Front</strong></br>
 L'url index.html est reload :</br>
 9h22 | 13h22 | 18h22</br>
 "index.html" est traité en vuejs, tris contextuels et restrictifs</br>
