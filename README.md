@@ -9,8 +9,7 @@ Ip du server à fournir à Mme xxx en cas de changement
 Récupération de l'Ip : 
 https://nom-de-dommaine/Previsions-Radio-France/id-server.php
 
-<strong>*** Back ***</strong>
-</br>
+<strong>*** Back ***</strong></br>
 Le Récurrence des majs (Radio France) :
 9h15 | 13h15 | 18h15
 Le Récurrence des uploads (tâche CRON - DSI SO -> M. Bardy) :
@@ -21,8 +20,7 @@ url : https://infographie.sudouest.fr/Previsions-Radio-France/getDatas.php
 Une inclusion est faite via cette url de parseAndSave.php qui fait une sauvegarde en base (table : "news") afin de stocker les données et de les agréger.
 "accesserver.php" à renseigner
 </br>
-<strong>*** Front ***</strong>
-</br>
+<strong>*** Front ***</strong></br>
 L'url index.html est reload :
 - 9h22 | 13h22 | 18h22
 "index.html" est traité en vuejs, tris contextuels et restrictifs
