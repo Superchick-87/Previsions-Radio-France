@@ -22,6 +22,7 @@ La tâche appelle cette url qui extrait un fichier .xml et le place dans ./datas
 url : https://infographie.sudouest.fr/Previsions-Radio-France/getDatas.php</br>
 Une inclusion est faite via cette url de "parseAndSave.php" qui fait une sauvegarde en base (table : "news") afin de stocker les données et de les agréger.</br>
 "accesserver.php" à renseigner</br>
+
 <strong>Front</strong></br>
 L'url index.html est reload :</br>
 9h22 | 13h22 | 18h22</br>
