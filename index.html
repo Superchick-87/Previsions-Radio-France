@@ -56,8 +56,17 @@
         </h2>
 
         <div v-for="(item, index) in group" :key="index" class="news-item">
+          <!-- <p v-if="!selectedStart" class="date date-event">
+            {{ formatDate(item.start) }} {{ formatDate(item.end) }}
+          </p> -->
+          
           <p v-if="!selectedStart" class="date date-event">
-            {{ formatDate(item.start) }}
+            <span v-if="formatDate(item.start) === formatDate(item.end)">
+              {{ formatDate(item.start) }}
+            </span>
+            <span v-else>
+              {{ formatDate(item.start) }} au {{ lowercaseFirst(formatDate(item.end)) }}
+            </span>
           </p>
 
           <mark :class="bdc(item.type)">
@@ -180,6 +189,9 @@
           const date = new Date(isoDateStr);
           date.setHours(date.getHours() - 1);
           return date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+        },
+        lowercaseFirst(text) {
+          return text.charAt(0).toLowerCase() + text.slice(1);
         },
         bdc(type) {
           return type
