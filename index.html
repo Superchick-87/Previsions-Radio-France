@@ -63,7 +63,7 @@
           <mark :class="bdc(item.type)">
             <span id="subtype" class="ss-domaine">{{ item.subtype }}</span>
           </mark>
-          <div v-if="item.title.includes('****')" class="bloc-warning">
+          <div v-if="item.title.includes('****') || item.title.includes('***')" class="bloc-warning">
             <div class="pict-warning"></div>
             <h3 class="titre-warning">{{ item.title }}</h3>
           </div>
