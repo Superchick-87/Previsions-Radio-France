@@ -60,14 +60,25 @@
             {{ formatDate(item.start) }} {{ formatDate(item.end) }}
           </p> -->
           
-          <p v-if="!selectedStart" class="date date-event">
+          <!-- <p v-if="!selectedStart" class="date date-event">
             <span v-if="formatDate(item.start) === formatDate(item.end)">
               {{ formatDate(item.start) }}
             </span>
             <span v-else>
               {{ formatDate(item.start) }} au {{ lowercaseFirst(formatDate(item.end)) }}
             </span>
+          </p> -->
+          <!-- <p style="color: red;">[DEBUG] {{ getDateSeparator(item) }}</p> -->
+
+          <p v-if="!selectedStart" class="date date-event">
+            <span v-if="formatDate(item.start) === formatDate(item.end)">
+              {{ formatDate(item.start) }}
+            </span>
+            <span v-else>
+              {{ formatDate(item.start) }} {{ getDateSeparator(item) }} {{ lowercaseFirst(formatDate(item.end)) }}
+            </span>
           </p>
+          
 
           <mark :class="bdc(item.type)">
             <span id="subtype" class="ss-domaine">{{ item.subtype }}</span>
@@ -192,6 +203,30 @@
         },
         lowercaseFirst(text) {
           return text.charAt(0).toLowerCase() + text.slice(1);
+        },
+        getDateSeparator(item) {
+          if (!item || !item.title || !item.end) return "au";
+
+          const title = item.title
+            .normalize("NFD")
+            .replace(/[\u00A0\u202F]/g, ' ')
+            .toLowerCase();
+
+          const endDay = new Date(item.end).getDate();
+
+          // 1. Si "(jusqu'au" est trouvé
+          if (title.includes("(jusqu'au")) {
+            return "au";
+          }
+
+          // 2. Si "(et {jour})" est trouvé
+          const regexEtJour = new RegExp(`\\(et\\s*${endDay}\\b`);
+          if (regexEtJour.test(title)) {
+            return "et";
+          }
+
+          // 3. Cas par défaut
+          return "au";
         },
         bdc(type) {
           return type
